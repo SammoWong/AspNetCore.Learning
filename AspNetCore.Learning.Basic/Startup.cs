@@ -21,10 +21,10 @@ namespace AspNetCore.Learning.Basic
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .AddMvcOptions(options =>
-                {
-                    options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-                }); ;
+                    .AddMvcOptions(options =>
+                    {
+                        options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());//asp.net core默认只实现了json返回格式，可以修改Mvc的配置来添加xml格式（需要在请求头Header中添加Accept：application/xml）
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
