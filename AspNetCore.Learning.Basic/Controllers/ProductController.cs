@@ -4,14 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Learning.Basic.Dtos;
 using AspNetCore.Learning.Basic.Services;
+using AspNetCore.Learning.Basic.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.Learning.Basic.Controllers
 {
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
+        private readonly ILogger<ProductController> _logger;
+        private readonly IMailService _mailService;
+        public ProductController(ILogger<ProductController> logger, IMailService mailService)
+        {
+            _logger = logger;
+            _mailService = mailService;
+        }
         [HttpGet]
         public IActionResult GetProducts()
         {
@@ -25,6 +34,7 @@ namespace AspNetCore.Learning.Basic.Controllers
             var product = ProductService.Current.Products.SingleOrDefault(p => p.Id == id);
             if(product == null)
             {
+                _logger.LogInformation($"Id为{id}的产品没有找到");
                 return NotFound();
             }
             return Ok(product);
@@ -98,6 +108,7 @@ namespace AspNetCore.Learning.Basic.Controllers
                 return NotFound();
             }
             ProductService.Current.Products.Remove(model);
+            _mailService.Send("Product Deleted", $"Id为{id}的产品被删除了");
             return NoContent();
         }
     }

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.Learning.Basic.Services;
+using AspNetCore.Learning.Basic.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace AspNetCore.Learning.Basic
 {
@@ -25,6 +29,9 @@ namespace AspNetCore.Learning.Basic
                     {
                         options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());//asp.net core默认只实现了json返回格式，可以修改Mvc的配置来添加xml格式（需要在请求头Header中添加Accept：application/xml）
                     });
+            
+            services.AddTransient<IMailService, LocalMailService>();
+            //services.AddTransient<IMailService, CloudMailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,8 +40,10 @@ namespace AspNetCore.Learning.Basic
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)//参数app、env都是已经注入的services
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)//参数app、env都是已经注入的services
         {
+            //loggerFactory.AddProvider(new NLogLoggerProvider());
+            loggerFactory.AddNLog();//添加NLog日志服务
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();//在Development环境下调用异常处理程序
