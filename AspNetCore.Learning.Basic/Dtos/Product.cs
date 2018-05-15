@@ -13,6 +13,8 @@ namespace AspNetCore.Learning.Basic.Dtos
 
         public float Price { get; set; }
 
+        public string Description { get; set; }
+
         public ICollection<Material> Materials { get; set; }
     }
 }
