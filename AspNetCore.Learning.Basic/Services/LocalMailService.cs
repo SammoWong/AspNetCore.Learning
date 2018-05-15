@@ -9,8 +9,8 @@ namespace AspNetCore.Learning.Basic.Services
 {
     public class LocalMailService : IMailService
     {
-        private string _mailTo = "developer@qq.com";
-        private string _mailFrom = "noreply@qq.com";
+        private readonly string _mailTo = Startup.Configuration["mailSettings:mailToAddress"];
+        private readonly string _mailFrom = Startup.Configuration["mailSettings:mailFromAddress"];
 
         public void Send(string subject, string msg)
         {

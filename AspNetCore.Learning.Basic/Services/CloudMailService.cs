@@ -14,7 +14,7 @@ namespace AspNetCore.Learning.Basic.Services
 
         public void Send(string subject, string msg)
         {
-            Debug.WriteLine($"从{_mailFrom}给{_mailTo}通过{nameof(LocalMailService)}发送了邮件");
+            Debug.WriteLine($"从{_mailFrom}给{_mailTo}通过{nameof(CloudMailService)}发送了邮件");
         }
     }
 }
