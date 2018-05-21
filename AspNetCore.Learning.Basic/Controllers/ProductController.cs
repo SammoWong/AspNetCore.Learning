@@ -59,7 +59,7 @@ namespace AspNetCore.Learning.Basic.Controllers
             }
 
             var maxId = ProductService.Current.Products.Max(x => x.Id);
-            var newProduct = new Product
+            var newProduct = new ProductDto
             {
                 Id = ++maxId,
                 Name = product.Name,

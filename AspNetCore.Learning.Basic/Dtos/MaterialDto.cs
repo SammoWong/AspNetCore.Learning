@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCore.Learning.Basic.Dtos
 {
-    public class Material
+    public class MaterialDto
     {
         public int Id { get; set; }
 

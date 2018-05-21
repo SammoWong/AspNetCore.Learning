@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace AspNetCore.Learning.Basic.Dtos
+namespace AspNetCore.Learning.EntityFrameworkCore.Entities
 {
     public class Product
     {
@@ -14,7 +13,5 @@ namespace AspNetCore.Learning.Basic.Dtos
         public float Price { get; set; }
 
         public string Description { get; set; }
-
-        public ICollection<Material> Materials { get; set; }
     }
 }

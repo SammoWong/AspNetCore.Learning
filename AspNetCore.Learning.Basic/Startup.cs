@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Learning.Basic.Services;
 using AspNetCore.Learning.Basic.Services.Interfaces;
+using AspNetCore.Learning.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -38,6 +40,8 @@ namespace AspNetCore.Learning.Basic
             
             services.AddTransient<IMailService, LocalMailService>();
             //services.AddTransient<IMailService, CloudMailService>();
+            var connectionString = Configuration["connectionStrings:coreLearningDbConnectionString"];
+            services.AddDbContext<MyContext>(o => o.UseSqlServer(connectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +50,7 @@ namespace AspNetCore.Learning.Basic
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)//参数app、env都是已经注入的services
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, MyContext myContext)//参数app、env都是已经注入的services
         {
             //loggerFactory.AddProvider(new NLogLoggerProvider());
             loggerFactory.AddNLog();//添加NLog日志服务
@@ -58,6 +62,7 @@ namespace AspNetCore.Learning.Basic
             {
                 app.UseExceptionHandler();//异常处理中间件
             }
+            myContext.EnsureSeedDataForContext();//添加种子数据
             app.UseStatusCodePages();
             //使用mvc来处理http请求:注意顺序, 应该在处理异常的中间件后边调用app.UseMvc(), 
             //所以处理异常的middleware可以在把request交给mvc之间就处理异常, 更重要的是它还可以捕获并处理MVC返回的相关代码中的异常.

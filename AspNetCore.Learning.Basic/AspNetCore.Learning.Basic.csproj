@@ -24,4 +24,8 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetCore.Learning.EntityFrameworkCore\AspNetCore.Learning.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
 </Project>
