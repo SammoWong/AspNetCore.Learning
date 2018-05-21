@@ -11,9 +11,10 @@ using System;
 namespace AspNetCore.Learning.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20180521144503_AddRemark")]
+    partial class AddRemark
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
