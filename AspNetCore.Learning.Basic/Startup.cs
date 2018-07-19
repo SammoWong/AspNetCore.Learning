@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.Learning.Basic.Filters;
 using AspNetCore.Learning.Basic.Services;
 using AspNetCore.Learning.Basic.Services.Interfaces;
 using AspNetCore.Learning.EntityFrameworkCore;
@@ -32,7 +33,11 @@ namespace AspNetCore.Learning.Basic
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddMvc(options=> 
+                    {
+                        //options.Filters.Add(new MyActionFilter());
+                        options.Filters.Add(new MyExceptionFilter());
+                    })
                     .AddMvcOptions(options =>
                     {
                         options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());//asp.net core默认只实现了json返回格式，可以修改Mvc的配置来添加xml格式（需要在请求头Header中添加Accept：application/xml）

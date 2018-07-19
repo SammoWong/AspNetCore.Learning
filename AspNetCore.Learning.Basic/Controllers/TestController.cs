@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCore.Learning.Basic.Filters;
 using AspNetCore.Learning.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,12 @@ namespace AspNetCore.Learning.Basic.Controllers
         }
 
         [HttpGet]
+        [MyResourceFilter]
+        //[MyAuthorizationFilter]
         public IActionResult Get()
         {
-            return Ok();
+            //throw new Exception("Known Exception");
+            return new JsonResult(DateTime.Now);
         }
     }
 }
